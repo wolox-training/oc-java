@@ -12,7 +12,7 @@ public class Book {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private long isbn;
+    private long isbnId;
 
     @Column(nullable = false, unique = true)
     private String title;
@@ -37,12 +37,12 @@ public class Book {
 
     public Book(){}
 
-    public Book(long isbn) {
-        this.isbn = isbn;
+    public Book(long isbnId) {
+        this.isbnId = isbnId;
     }
 
     public long getIsbn() {
-        return isbn;
+        return isbnId;
     }
 
     public String getTitle() {
