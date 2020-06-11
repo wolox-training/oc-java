@@ -7,7 +7,7 @@ import java.util.Collections;
 import java.util.List;
 
 @Entity
-public class User {
+public class Users {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -21,16 +21,13 @@ public class User {
 
     @Column(nullable = false)
     private LocalDate birthday;
-    // PREGUNTAR: Cómo es el uso del one to one en este caso que solo estaria en el User ya que Books no tiene users, para combinar la tabla Books en esta.
+
+    @OneToOne(targetEntity = Book.class, cascade = CascadeType.ALL)
+    @JoinColumn(name = "BOOK_ID")
     private List<Book> books = new ArrayList<>();
 
-    public User(long id) {
+    public Users(long id) {
         this.id = id;
-    }
-
-    // PREGUNTAR: Debería books llevar un setter también ? "ya que luego será cargado automáticamente cuando se levante de la base de datos"
-    public List<Book> getBooks() {
-        return Collections.unmodifiableList(books);
     }
 
     public long getId() {
@@ -59,5 +56,13 @@ public class User {
 
     public void setBirthday(LocalDate birthday) {
         this.birthday = birthday;
+    }
+
+    public List<Book> getBooks() {
+        return Collections.unmodifiableList(books);
+    }
+
+    public void setBooks(List<Book> books) {
+        this.books = books;
     }
 }
