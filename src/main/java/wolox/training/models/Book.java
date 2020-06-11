@@ -1,11 +1,6 @@
 package wolox.training.models;
 
-import org.springframework.data.annotation.Id;
-
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
+import javax.persistence.*;
 
 @Entity
 public class Book {
@@ -38,7 +33,7 @@ public class Book {
     @Column(nullable = false)
     private int year;
 
-    public Book(long id){
+    public Book(long id) {
         this.id = id;
     }
 
