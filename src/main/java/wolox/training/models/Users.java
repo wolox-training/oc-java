@@ -65,4 +65,12 @@ public class Users {
     public void setBooks(List<Book> books) {
         this.books = books;
     }
+
+    public void addBooks(Book book) {
+        books.add(book);
+    }
+
+    public void removeBook(Book book) {
+        books.remove(book);
+    }
 }
