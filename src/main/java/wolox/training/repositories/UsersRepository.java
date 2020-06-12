@@ -1,10 +1,12 @@
 package wolox.training.repositories;
 
-import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 import wolox.training.models.Users;
 
+import java.util.List;
+
 @Repository
-public interface UsersRepository extends CrudRepository<Users, Long> {
-    Users findByName(String username);
+public interface UsersRepository extends JpaRepository<Users, Long> {
+    List<Users> findByName(String username);
 }
