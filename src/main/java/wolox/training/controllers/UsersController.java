@@ -3,9 +3,12 @@ package wolox.training.controllers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
-import wolox.training.exceptions.BookIdMismatchException;
 import wolox.training.exceptions.BookNotFoundException;
+import wolox.training.exceptions.UserIdMismatchException;
+import wolox.training.exceptions.UserNotFoundException;
+import wolox.training.models.Book;
 import wolox.training.models.Users;
+import wolox.training.repositories.BookRepository;
 import wolox.training.repositories.UsersRepository;
 
 import java.util.List;
@@ -17,6 +20,7 @@ public class UsersController {
 
     @Autowired
     private UsersRepository usersRepository;
+    private BookRepository bookRepository;
 
     @GetMapping
     public Iterable findAll() {
@@ -42,19 +46,33 @@ public class UsersController {
     @DeleteMapping("/{id}")
     public void delete(@PathVariable Long id) {
         usersRepository.findById(id)
-                .orElseThrow(() -> new BookNotFoundException("error user"));
+                .orElseThrow(() -> new UserNotFoundException("error user"));
         usersRepository.deleteById(id);
     }
 
     @PutMapping("/{id}")
     public Users updateUsers(@RequestBody Users users, @PathVariable Long id) {
         if (users.getId() != id) {
-            throw new BookIdMismatchException();
+            throw new UserIdMismatchException();
         }
         usersRepository.findById(id)
-                .orElseThrow(() -> new BookNotFoundException("error user"));
+                .orElseThrow(() -> new UserNotFoundException("error user"));
         return usersRepository.save(users);
     }
 
+    @PutMapping("users/{id}/addbooks/{bookId} ")
+    public void addBooks(@PathVariable Long id, @PathVariable Long bookId) {
+        Book book = bookRepository.findById(bookId).orElseThrow(() -> new BookNotFoundException("error book no existe"));
+        Users users = usersRepository.findById(id).orElseThrow(() -> new UserNotFoundException("error user"));
+        users.addBooks(book);
+        usersRepository.save(users);
+    }
 
+    @DeleteMapping("users/{id}/deletebooks/{bookId} ")
+    public void deleteBooks(@PathVariable Long id, @PathVariable Long bookId) {
+        Book book = bookRepository.findById(bookId).orElseThrow(() -> new BookNotFoundException("error book no existe"));
+        Users users = usersRepository.findById(id).orElseThrow(() -> new UserNotFoundException("error user"));
+        users.removeBook(book);
+        usersRepository.save(users);
+    }
 }
