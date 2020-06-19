@@ -1,10 +1,13 @@
 package wolox.training.models;
 
 import com.google.common.base.Preconditions;
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 
 import javax.persistence.*;
 
 @Entity
+@ApiModel(description = "Books from the OpenLibraryAPI")
 public class Book {
 
     @Id
@@ -21,6 +24,7 @@ public class Book {
     private String author;
 
     @Column()
+    @ApiModelProperty(notes = "The book genre could be: drama, horror, comedy, etc.")
     private String genre;
 
     @Column(nullable = false)

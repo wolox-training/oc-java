@@ -1,5 +1,9 @@
 package wolox.training.controllers;
 
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.ui.Model;
@@ -19,7 +23,7 @@ public class BookController {
     private BookRepository bookRepository;
 
     @GetMapping("/greeting")
-    public String greeting(@RequestParam(name="name", required=false, defaultValue="World") String name, Model model) {
+    public String greeting(@RequestParam(name = "name", required = false, defaultValue = "World") String name, Model model) {
         model.addAttribute("name", name);
         return "greeting";
     }
@@ -30,14 +34,22 @@ public class BookController {
     }
 
     @GetMapping("/title/{bookTitle}")
+
     public List findByTitle(@PathVariable String bookTitle) {
         return bookRepository.findByTitle(bookTitle);
     }
 
     @GetMapping("/{id}")
-    public Book findOne(@PathVariable Long id) {
+    @ApiOperation(value = "Giving an id, return one book", response = Book.class)
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Success"),
+            @ApiResponse(code = 401, message = "Not Authorized"),
+            @ApiResponse(code = 403, message = "Access forbidden"),
+            @ApiResponse(code = 404, message = "Book Not Found"),
+    })
+    public Book findOne(@ApiParam(value = "id to find the book", required = true) @PathVariable Long id) {
         return bookRepository.findById(id)
-                .orElseThrow(() -> new BookNotFoundException("mensaje de error"));
+                .orElseThrow(() -> new BookNotFoundException("mensaje de error id"));
     }
 
     @PostMapping
@@ -49,7 +61,7 @@ public class BookController {
     @DeleteMapping("/{id}")
     public void delete(@PathVariable Long id) {
         bookRepository.findById(id)
-                .orElseThrow( () -> new BookNotFoundException("error de book"));
+                .orElseThrow(() -> new BookNotFoundException("error de book"));
         bookRepository.deleteById(id);
     }
 
@@ -59,7 +71,7 @@ public class BookController {
             throw new BookIdMismatchException();
         }
         bookRepository.findById(id)
-                .orElseThrow( () -> new BookNotFoundException("error de book"));
+                .orElseThrow(() -> new BookNotFoundException("error de book"));
         return bookRepository.save(book);
     }
 
