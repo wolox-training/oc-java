@@ -1,5 +1,9 @@
 package wolox.training.controllers;
 
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -33,7 +37,14 @@ public class UsersController {
     }
 
     @GetMapping("/{id}")
-    public Optional<Users> findOne(@PathVariable Long id) {
+    @ApiOperation(value = "Giving an id, return the user", response = Users.class)
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Success"),
+            @ApiResponse(code = 401, message = "Not Authorized"),
+            @ApiResponse(code = 403, message = "Access forbidden"),
+            @ApiResponse(code = 404, message = "User Not Found"),
+    })
+    public Optional<Users> findOne(@ApiParam(value = "id to find a user", required = true) @PathVariable Long id) {
         return usersRepository.findById(id);
     }
 
