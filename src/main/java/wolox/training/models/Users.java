@@ -1,5 +1,7 @@
 package wolox.training.models;
 
+import com.google.common.base.Preconditions;
+
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -39,6 +41,7 @@ public class Users {
     }
 
     public void setUsername(String username) {
+        Preconditions.checkNotNull(username, "Please check the Object supplied, its null!");
         this.username = username;
     }
 
@@ -47,6 +50,7 @@ public class Users {
     }
 
     public void setName(String name) {
+        Preconditions.checkNotNull(name, "Please check the Object supplied, its null!");
         this.name = name;
     }
 
@@ -55,6 +59,7 @@ public class Users {
     }
 
     public void setBirthday(LocalDate birthday) {
+        Preconditions.checkNotNull(birthday, "Please check the Object supplied, its null!");
         this.birthday = birthday;
     }
 

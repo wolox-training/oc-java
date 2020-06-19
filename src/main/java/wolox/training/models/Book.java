@@ -1,5 +1,7 @@
 package wolox.training.models;
 
+import com.google.common.base.Preconditions;
+
 import javax.persistence.*;
 
 @Entity
@@ -46,6 +48,7 @@ public class Book {
     }
 
     public void setIsbn(String isbn) {
+        Preconditions.checkNotNull(isbn, "Please check the Object supplied, its null!");
         this.isbn = isbn;
     }
 
@@ -54,6 +57,7 @@ public class Book {
     }
 
     public void setTitle(String title) {
+        Preconditions.checkNotNull(title, "Please check the Object supplied, its null!");
         this.title = title;
     }
 
@@ -62,6 +66,7 @@ public class Book {
     }
 
     public void setAuthor(String author) {
+        Preconditions.checkNotNull(author, "Please check the Object supplied, its null!");
         this.author = author;
     }
 
@@ -78,6 +83,7 @@ public class Book {
     }
 
     public void setSubtitle(String subtitle) {
+        Preconditions.checkNotNull(subtitle, "Please check the Object supplied, its null!");
         this.subtitle = subtitle;
     }
 
@@ -86,6 +92,7 @@ public class Book {
     }
 
     public void setImage(String image) {
+        Preconditions.checkNotNull(image, "Please check the Object supplied, its null!");
         this.image = image;
     }
 
@@ -94,6 +101,7 @@ public class Book {
     }
 
     public void setPublisher(String publisher) {
+        Preconditions.checkNotNull(publisher, "Please check the Object supplied, its null!");
         this.publisher = publisher;
     }
 
@@ -102,6 +110,7 @@ public class Book {
     }
 
     public void setYear(int year) {
+        Preconditions.checkNotNull(author, "Please check the Object supplied, its null!");
         this.year = year;
     }
 
