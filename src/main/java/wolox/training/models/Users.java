@@ -28,6 +28,7 @@ public class Users {
 
     public Users(long id) {
         this.id = id;
+        this.books = new ArrayList<>();
     }
 
     public long getId() {
