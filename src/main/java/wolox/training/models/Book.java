@@ -39,6 +39,9 @@ public class Book {
     @Column(nullable = false)
     private int year;
 
+    public Book() {
+    }
+
     public Book(long id) {
         this.id = id;
     }

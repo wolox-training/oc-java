@@ -28,6 +28,9 @@ public class Users {
     @JoinColumn(name = "BOOK_ID")
     private List<Book> books = new ArrayList<>();
 
+    public Users() {
+    }
+
     public Users(long id) {
         this.id = id;
         this.books = new ArrayList<>();
