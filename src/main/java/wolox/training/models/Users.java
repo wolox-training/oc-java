@@ -24,8 +24,12 @@ public class Users {
     @Column(nullable = false)
     private LocalDate birthday;
 
-    @OneToOne(targetEntity = Book.class, cascade = CascadeType.ALL)
-    @JoinColumn(name = "BOOK_ID")
+    @ManyToMany(targetEntity = Book.class, cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JoinTable(
+            name = "user_books",
+            joinColumns = {@JoinColumn(name = "USERS_ID")},
+            inverseJoinColumns = {@JoinColumn(name = "BOOK_ID")}
+    )
     private List<Book> books = new ArrayList<>();
 
     public Users() {

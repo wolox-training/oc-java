@@ -63,7 +63,7 @@ public class UsersController {
 
     @PutMapping("/{id}")
     public Users updateUsers(@RequestBody Users users, @PathVariable Long id) {
-        if (users.getId() != id) {
+        if (users.getId() != 0) {
             throw new UserIdMismatchException();
         }
         usersRepository.findById(id)

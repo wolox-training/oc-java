@@ -5,6 +5,8 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @ApiModel(description = "Books from the OpenLibraryAPI")
@@ -38,6 +40,10 @@ public class Book {
 
     @Column(nullable = false)
     private int year;
+
+    @ManyToMany(mappedBy = "books", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    private List<Users> users = new ArrayList<>();
+
 
     public Book() {
     }
