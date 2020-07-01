@@ -24,7 +24,7 @@ public class Users {
     @Column(nullable = false)
     private LocalDate birthday;
 
-    @ManyToMany(targetEntity = Book.class, cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @ManyToMany(targetEntity = Book.class, cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
     @JoinTable(
             name = "user_books",
             joinColumns = {@JoinColumn(name = "USERS_ID")},
