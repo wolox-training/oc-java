@@ -63,7 +63,7 @@ public class UsersController {
 
     @PutMapping("/{id}")
     public Users updateUsers(@RequestBody Users users, @PathVariable Long id) {
-        if (users.getId() != id) {
+        if (users.getId() != 0) {
             throw new UserIdMismatchException();
         }
         usersRepository.findById(id)
@@ -71,7 +71,7 @@ public class UsersController {
         return usersRepository.save(users);
     }
 
-    @PutMapping("users/{id}/addbooks/{bookId} ")
+    @PostMapping("/{id}/addbooks/{bookId}")
     public void addBooks(@PathVariable Long id, @PathVariable Long bookId) {
         Book book = bookRepository.findById(bookId).orElseThrow(() -> new BookNotFoundException("error book no existe"));
         Users users = usersRepository.findById(id).orElseThrow(() -> new UserNotFoundException("error user"));
@@ -79,7 +79,7 @@ public class UsersController {
         usersRepository.save(users);
     }
 
-    @DeleteMapping("users/{id}/deletebooks/{bookId} ")
+    @DeleteMapping("users/{id}/deletebooks/{bookId}")
     public void deleteBooks(@PathVariable Long id, @PathVariable Long bookId) {
         Book book = bookRepository.findById(bookId).orElseThrow(() -> new BookNotFoundException("error book no existe"));
         Users users = usersRepository.findById(id).orElseThrow(() -> new UserNotFoundException("error user"));
