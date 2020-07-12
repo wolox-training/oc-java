@@ -75,7 +75,7 @@ public class Users {
         this.books = books;
     }
 
-    public void addBooks(Book book) {
+    public void addBook(Book book) {
         books.add(book);
     }
 

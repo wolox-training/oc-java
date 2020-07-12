@@ -75,7 +75,7 @@ public class UsersController {
     public void addBooks(@PathVariable Long id, @PathVariable Long bookId) {
         Book book = bookRepository.findById(bookId).orElseThrow(() -> new BookNotFoundException("error book no existe"));
         Users users = usersRepository.findById(id).orElseThrow(() -> new UserNotFoundException("error user"));
-        users.addBooks(book);
+        users.addBook(book);
         usersRepository.save(users);
     }
 

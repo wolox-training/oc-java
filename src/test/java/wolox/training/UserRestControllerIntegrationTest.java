@@ -1,4 +1,4 @@
-package wolox.training.controllers;
+package wolox.training;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -8,11 +8,15 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
+import wolox.training.controllers.UsersController;
 import wolox.training.models.Book;
 import wolox.training.models.Users;
 import wolox.training.repositories.UsersRepository;
 
 import java.time.LocalDate;
+
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @WebMvcTest(UsersController.class)
 public class UserRestControllerIntegrationTest {
@@ -27,6 +31,7 @@ public class UserRestControllerIntegrationTest {
     @Before
     public void SetUp() {
         oneTestBook = new Book();
+        oneTestBook.setIsbn("1234");
         oneTestBook.setAuthor("G.R.Martin");
         oneTestBook.setTitle("Song of ice and fire");
         oneTestBook.setSubtitle("A Game of Thrones");
@@ -47,13 +52,7 @@ public class UserRestControllerIntegrationTest {
         Mockito.when(mockUserRepository.findById(1L)).thenReturn(java.util.Optional.ofNullable(oneTestUser));
         String url = ("api/users/1");
         mvc.perform(get(url)
-                .contentType(MediaType.APPLICATION_JSON));
-            .andExpect(status().isOk());
-            .andExpect(content().json(
-                "{\"id\":0,\"username\":\"ocolmenares\",\"name\":\"Oriana\",\"birthday\":\"1997-11-03\",\"books\":[{\"id\":0,\"author\":\"G.R.Martin\"," +
-                        "\"title\":\"Song of ice and fire\",\"subtitle\":\"A Game of Thrones\"," +
-                        "\"genre\":\"Fantasy\",\"image\":\"insert image\",\"publisher\":\"Bantam books\",\"year\":\"1998}]}"
-        ));
-
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk());
     }
 }
