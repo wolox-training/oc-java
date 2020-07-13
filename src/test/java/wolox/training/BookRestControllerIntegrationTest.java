@@ -2,11 +2,14 @@ package wolox.training;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
+import org.springframework.security.test.context.support.WithMockUser;
+import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import wolox.training.controllers.BookController;
 import wolox.training.models.Book;
@@ -15,7 +18,7 @@ import wolox.training.repositories.BookRepository;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-
+@RunWith(SpringRunner.class)
 @WebMvcTest(BookController.class)
 public class BookRestControllerIntegrationTest {
     @Autowired
@@ -27,22 +30,23 @@ public class BookRestControllerIntegrationTest {
 
     @Before
     public void SetUp() {
-        oneTestBook = new Book();
-        oneTestBook.setIsbn("1234");
-        oneTestBook.setAuthor("G.R.Martin");
-        oneTestBook.setTitle("Song of ice and fire");
-        oneTestBook.setSubtitle("A Game of Thrones");
-        oneTestBook.setGenre("Fantasy");
-        oneTestBook.setImage("insert image");
-        oneTestBook.setPublisher("Bantam books");
-        oneTestBook.setYear(1998);
+        oneTestBook = new Book(
+                "1234",
+                "Song of ice and fire",
+                "G.R.Martin",
+                "Fantasy",
+                "A Game of Thrones",
+                "inset image",
+                "Bantam books",
+                1998
+        );
     }
 
-
+    @WithMockUser(value = "spring")
     @Test
     public void whenFindByIdWhichExist_thenBookIsReturned() throws Exception {
         Mockito.when(mockBookRepository.findById(1L)).thenReturn(java.util.Optional.ofNullable(oneTestBook));
-        String url = ("api/book/1");
+        String url = ("api/books/1");
         mvc.perform(get(url)
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk());

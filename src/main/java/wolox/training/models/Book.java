@@ -46,6 +46,11 @@ public class Book {
         this.id = id;
     }
 
+    public Book(String isbn, String title, String author, String genre, String subtitle, String image, String publisher, int year) {
+
+
+    }
+
     public long getId() {
         return id;
     }
