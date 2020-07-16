@@ -26,6 +26,7 @@ public class BookRestControllerIntegrationTest {
 
     @MockBean
     private BookRepository mockBookRepository;
+
     private Book oneTestBook;
 
     @Before
@@ -36,7 +37,7 @@ public class BookRestControllerIntegrationTest {
                 "G.R.Martin",
                 "Fantasy",
                 "A Game of Thrones",
-                "inset image",
+                "insert image",
                 "Bantam books",
                 1998
         );
@@ -46,7 +47,7 @@ public class BookRestControllerIntegrationTest {
     @Test
     public void whenFindByIdWhichExist_thenBookIsReturned() throws Exception {
         Mockito.when(mockBookRepository.findById(1L)).thenReturn(java.util.Optional.ofNullable(oneTestBook));
-        String url = ("api/books/1");
+        String url = ("/api/books/1");
         mvc.perform(get(url)
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk());

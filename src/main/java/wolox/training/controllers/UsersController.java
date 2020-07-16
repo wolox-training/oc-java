@@ -33,7 +33,7 @@ public class UsersController {
 
     @GetMapping("/username/{userName}")
     public List findByName(@PathVariable String username) {
-        return usersRepository.findByName(username);
+        return usersRepository.findByUsername(username);
     }
 
     @GetMapping("/{id}")

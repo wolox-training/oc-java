@@ -11,6 +11,7 @@ import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.ResultMatcher;
 import wolox.training.controllers.UsersController;
 import wolox.training.models.Book;
 import wolox.training.models.Users;
@@ -18,7 +19,9 @@ import wolox.training.repositories.UsersRepository;
 
 import java.time.LocalDate;
 
+import static org.assertj.core.internal.bytebuddy.matcher.ElementMatchers.is;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @RunWith(SpringRunner.class)
@@ -35,15 +38,16 @@ public class UserRestControllerIntegrationTest {
 
     @Before
     public void SetUp() {
-        oneTestBook = new Book();
-        oneTestBook.setIsbn("1234");
-        oneTestBook.setAuthor("G.R.Martin");
-        oneTestBook.setTitle("Song of ice and fire");
-        oneTestBook.setSubtitle("A Game of Thrones");
-        oneTestBook.setGenre("Fantasy");
-        oneTestBook.setImage("insert image");
-        oneTestBook.setPublisher("Bantam books");
-        oneTestBook.setYear(1998);
+        oneTestBook = new Book(
+                "1234",
+                "Song of ice and fire",
+                "G.R.Martin",
+                "Fantasy",
+                "A Game of Thrones",
+                "insert image",
+                "Bantam books",
+                1998
+        );
         oneTestUser = new Users();
         oneTestUser.setUsername("ocolmenares");
         oneTestUser.setName("Oriana");
@@ -55,9 +59,15 @@ public class UserRestControllerIntegrationTest {
     @Test
     public void whenFindByIdWhichExist_thenUserIsReturned() throws Exception {
         Mockito.when(mockUserRepository.findById(1L)).thenReturn(java.util.Optional.ofNullable(oneTestUser));
-        String url = ("api/users/1");
+        String url = ("/api/users/1");
         mvc.perform(get(url)
                 .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk());
+                .andExpect(status().isOk())
+                .andExpect((ResultMatcher) jsonPath(
+                        "$.username", is("ocolmenares"),
+                        "$.name", is("Oriana"),
+                        "$.birthday", is("1997-11-03"),
+                        "$.books", is("books.size()")
+                ));
     }
 }
