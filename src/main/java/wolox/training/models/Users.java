@@ -45,7 +45,7 @@ public class Users {
     }
 
     public void setUsername(String username) {
-        Preconditions.checkNotNull(username, "Please check the Object supplied, its null!");
+        Preconditions.checkNotNull(username, "Please check the USERNAME!!!!! supplied, its null!");
         this.username = username;
     }
 
