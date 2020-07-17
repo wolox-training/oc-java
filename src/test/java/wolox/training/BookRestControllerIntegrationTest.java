@@ -16,6 +16,7 @@ import wolox.training.models.Book;
 import wolox.training.repositories.BookRepository;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @RunWith(SpringRunner.class)
@@ -50,7 +51,10 @@ public class BookRestControllerIntegrationTest {
         String url = ("/api/books/1");
         mvc.perform(get(url)
                 .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk());
+                .andExpect(status().isOk())
+                .andExpect(jsonPath
+                        ("$.title").value("Song of ice and fire")
+                );
     }
 }
 

@@ -11,6 +11,8 @@ import wolox.training.models.Book;
 import wolox.training.models.Users;
 import wolox.training.repositories.UsersRepository;
 
+import java.time.LocalDate;
+
 @RunWith(SpringRunner.class)
 @DataJpaTest
 public class UserRepositoryIntegrationTest {
@@ -25,7 +27,7 @@ public class UserRepositoryIntegrationTest {
 
     @Before
     public void SetUp() {
-       /* oneTestBook = new Book(
+        oneTestBook = new Book(
                 "1234",
                 "Song of ice and fire",
                 "G.R.Martin",
@@ -41,13 +43,12 @@ public class UserRepositoryIntegrationTest {
         oneTestUser.setBirthday(LocalDate.parse("1997-11-03"));
         oneTestUser.addBook(oneTestBook);
 
-        */
     }
 
     @Test
     public void whenCreatedUser_thenUserIsPersisted() {
         System.out.println("Empieza el test");
-       /* Users persistedUsers = usersRepository.findFirstByUsername("ocolmenares")
+        Users persistedUsers = usersRepository.findFirstByUsername("ocolmenares")
                 .orElse(new Users());
         assertThat(persistedUsers.getUsername()
                 .equals(oneTestUser.getUsername())).isTrue();
@@ -57,8 +58,6 @@ public class UserRepositoryIntegrationTest {
                 .equals(oneTestUser.getBirthday())).isTrue();
         assertThat(persistedUsers.getBooks().size() == oneTestUser.getBooks().size()).isTrue();
         usersRepository.save(oneTestUser);
-
-        */
     }
 
     @Test(expected = IllegalArgumentException.class)

@@ -29,12 +29,11 @@ public class BookRepositoryIntegrationTest {
 
     @Test
     public void whenCreatedBook_thenBookIsPersisted() {
-       /* Book persistedBook = bookRepository.findByTitle("Song of ice and fire")
+        Book persistedBook = bookRepository.findByTitle("Song of ice and fire")
                 .orElse(new Book());
         assertThat(persistedBook.getTitle()
                 .equals(oneTestBook.getTitle())).isTrue();
 
-        */
     }
 
     @Test(expected = IllegalArgumentException.class)

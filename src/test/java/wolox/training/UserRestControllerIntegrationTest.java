@@ -11,7 +11,6 @@ import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.ResultMatcher;
 import wolox.training.controllers.UsersController;
 import wolox.training.models.Book;
 import wolox.training.models.Users;
@@ -19,7 +18,6 @@ import wolox.training.repositories.UsersRepository;
 
 import java.time.LocalDate;
 
-import static org.assertj.core.internal.bytebuddy.matcher.ElementMatchers.is;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -63,11 +61,7 @@ public class UserRestControllerIntegrationTest {
         mvc.perform(get(url)
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
-                .andExpect((ResultMatcher) jsonPath(
-                        "$.username", is("ocolmenares"),
-                        "$.name", is("Oriana"),
-                        "$.birthday", is("1997-11-03"),
-                        "$.books", is("books.size()")
-                ));
+                .andExpect(jsonPath
+                        ("$.username").value("ocolmenares"));
     }
 }
