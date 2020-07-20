@@ -41,7 +41,7 @@ public class Book {
     @Column(nullable = false)
     private int year;
 
-    @ManyToMany(mappedBy = "books", fetch = FetchType.EAGER)
+    @ManyToMany(mappedBy = "books")
     private List<Users> users = new ArrayList<>();
 
 

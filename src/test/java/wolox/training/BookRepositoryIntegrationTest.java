@@ -6,7 +6,6 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
-import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 import org.springframework.test.context.junit4.SpringRunner;
 import wolox.training.models.Book;
 import wolox.training.repositories.BookRepository;
@@ -16,8 +15,6 @@ import static junit.framework.TestCase.assertTrue;
 @RunWith(SpringRunner.class)
 @DataJpaTest
 public class BookRepositoryIntegrationTest {
-    @Autowired
-    private TestEntityManager entityManager;
 
     @Autowired
     private BookRepository bookRepository;
@@ -35,7 +32,7 @@ public class BookRepositoryIntegrationTest {
                 "Bantam books",
                 1998
         );
-        entityManager.persist(oneTestBook);
+        bookRepository.save(oneTestBook);
     }
 
     @Test

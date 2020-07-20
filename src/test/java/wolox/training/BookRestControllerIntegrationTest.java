@@ -8,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
-import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import wolox.training.controllers.BookController;
@@ -44,7 +43,7 @@ public class BookRestControllerIntegrationTest {
         );
     }
 
-    @WithMockUser(value = "spring")
+
     @Test
     public void whenFindByIdWhichExist_thenBookIsReturned() throws Exception {
         Mockito.when(mockBookRepository.findById(1L)).thenReturn(java.util.Optional.ofNullable(oneTestBook));
@@ -53,7 +52,21 @@ public class BookRestControllerIntegrationTest {
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath
-                        ("$.title").value("Song of ice and fire")
+                        ("$.title").value("Song of ice and fire"))
+                .andExpect(jsonPath
+                        ("$.isbn").value("1234"))
+                .andExpect(jsonPath
+                        ("$.author").value("G.R.Martin"))
+                .andExpect(jsonPath
+                        ("$.genre").value("Fantasy"))
+                .andExpect(jsonPath
+                        ("$.subtitle").value("A Game of Thrones"))
+                .andExpect(jsonPath
+                        ("$.image").value("insert image"))
+                .andExpect(jsonPath
+                        ("$.publisher").value("Bantam books"))
+                .andExpect(jsonPath
+                        ("$.year").value(1998)
                 );
     }
 }

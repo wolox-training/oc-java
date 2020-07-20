@@ -8,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
-import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import wolox.training.controllers.UsersController;
@@ -53,7 +52,6 @@ public class UserRestControllerIntegrationTest {
         oneTestUser.addBook(oneTestBook);
     }
 
-    @WithMockUser
     @Test
     public void whenFindByIdWhichExist_thenUserIsReturned() throws Exception {
         Mockito.when(mockUserRepository.findById(1L)).thenReturn(java.util.Optional.ofNullable(oneTestUser));
@@ -62,6 +60,10 @@ public class UserRestControllerIntegrationTest {
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath
-                        ("$.username").value("ocolmenares"));
+                        ("$.username").value("ocolmenares"))
+                .andExpect(jsonPath
+                        ("$.name").value("Oriana"))
+                .andExpect(jsonPath
+                        ("$.birthday").value("1997-11-03"));
     }
 }

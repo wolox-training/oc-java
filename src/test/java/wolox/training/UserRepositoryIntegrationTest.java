@@ -5,10 +5,10 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
-import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 import org.springframework.test.context.junit4.SpringRunner;
 import wolox.training.models.Book;
 import wolox.training.models.Users;
+import wolox.training.repositories.BookRepository;
 import wolox.training.repositories.UsersRepository;
 
 import java.time.LocalDate;
@@ -18,11 +18,12 @@ import static junit.framework.TestCase.assertTrue;
 @RunWith(SpringRunner.class)
 @DataJpaTest
 public class UserRepositoryIntegrationTest {
-    @Autowired
-    private TestEntityManager entityManager;
 
     @Autowired
     private UsersRepository usersRepository;
+
+    @Autowired
+    private BookRepository bookRepository;
 
     private Users oneTestUser;
     private Book oneTestBook;
@@ -45,13 +46,10 @@ public class UserRepositoryIntegrationTest {
         oneTestUser.setBirthday(LocalDate.parse("1997-11-03"));
         oneTestUser.addBook(oneTestBook);
 
-        entityManager.persist(oneTestUser);
+        bookRepository.save(oneTestBook);
+        usersRepository.save(oneTestUser);
     }
 
-    @Test
-    public void should_store_a_user() {
-        Users persistedUser = usersRepository.save(oneTestUser);
-    }
 
     @Test
     public void whenGetUser_thenUserIsPersisted() {
