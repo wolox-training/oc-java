@@ -11,6 +11,8 @@ import org.springframework.test.context.junit4.SpringRunner;
 import wolox.training.models.Book;
 import wolox.training.repositories.BookRepository;
 
+import static junit.framework.TestCase.assertTrue;
+
 @RunWith(SpringRunner.class)
 @DataJpaTest
 public class BookRepositoryIntegrationTest {
@@ -23,24 +25,42 @@ public class BookRepositoryIntegrationTest {
 
     @Before
     public void SetUp() {
-        oneTestBook = new Book();
-        oneTestBook.setTitle("Harry Potter");
+        oneTestBook = new Book(
+                "1234",
+                "Song of ice and fire",
+                "G.R.Martin",
+                "Fantasy",
+                "A Game of Thrones",
+                "inset image",
+                "Bantam books",
+                1998
+        );
+        entityManager.persist(oneTestBook);
     }
 
     @Test
-    public void whenCreatedBook_thenBookIsPersisted() {
-        /*Book persistedBook = bookRepository.findFirstByTitle("Song of ice and fire")
+    public void whenGetBook_thenBookIsPersisted() {
+        Book persistedBook = bookRepository.findByTitle("Song of ice and fire")
                 .orElse(new Book());
-        assertThat(persistedBook.getTitle()
-                .equals(oneTestBook.getTitle())).isTrue();
-        bookRepository.save(oneTestBook);
-
-         */
+        assertTrue(persistedBook.getTitle()
+                .equals(oneTestBook.getTitle()));
+        assertTrue(persistedBook.getIsbn()
+                .equals(oneTestBook.getIsbn()));
+        assertTrue(persistedBook.getAuthor()
+                .equals(oneTestBook.getAuthor()));
+        assertTrue(persistedBook.getGenre()
+                .equals(oneTestBook.getGenre()));
+        assertTrue(persistedBook.getSubtitle()
+                .equals(oneTestBook.getSubtitle()));
+        assertTrue(persistedBook.getImage()
+                .equals(oneTestBook.getImage()));
+        assertTrue(persistedBook.getPublisher()
+                .equals(oneTestBook.getPublisher()));
+        assertTrue(persistedBook.getYear() == (oneTestBook.getYear()));
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test(expected = NullPointerException.class)
     public void whenCreateBookWithoutTitle_thenTrowException() {
         oneTestBook.setTitle(null);
-        bookRepository.save(oneTestBook);
     }
 }

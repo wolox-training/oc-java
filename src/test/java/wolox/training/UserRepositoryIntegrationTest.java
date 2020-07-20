@@ -13,6 +13,8 @@ import wolox.training.repositories.UsersRepository;
 
 import java.time.LocalDate;
 
+import static junit.framework.TestCase.assertTrue;
+
 @RunWith(SpringRunner.class)
 @DataJpaTest
 public class UserRepositoryIntegrationTest {
@@ -42,31 +44,31 @@ public class UserRepositoryIntegrationTest {
         oneTestUser.setName("Oriana");
         oneTestUser.setBirthday(LocalDate.parse("1997-11-03"));
         oneTestUser.addBook(oneTestBook);
-    }
 
+        entityManager.persist(oneTestUser);
+    }
 
     @Test
-    public void whenCreatedUser_thenUserIsPersisted() {
-        /*
-        System.out.println("Empieza el test");
-        Users persistedUsers = usersRepository.findFirstByUsername("ocolmenares")
-                .orElse(new Users());
-        assertThat(persistedUsers.getUsername()
-                .equals(oneTestUser.getUsername())).isTrue();
-        assertThat(persistedUsers.getName()
-                .equals(oneTestUser.getName())).isTrue();
-        assertThat(persistedUsers.getBirthday()
-                .equals(oneTestUser.getBirthday())).isTrue();
-        assertThat(persistedUsers.getBooks().size() == oneTestUser.getBooks().size()).isTrue();
-        usersRepository.save(oneTestUser);
-
-         */
+    public void should_store_a_user() {
+        Users persistedUser = usersRepository.save(oneTestUser);
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
+    public void whenGetUser_thenUserIsPersisted() {
+        Users persistedUsers = usersRepository.findByUsername("ocolmenares")
+                .orElse(new Users());
+        assertTrue(persistedUsers.getUsername()
+                .equals(oneTestUser.getUsername()));
+        assertTrue(persistedUsers.getName()
+                .equals(oneTestUser.getName()));
+        assertTrue(persistedUsers.getBirthday()
+                .equals(oneTestUser.getBirthday()));
+        assertTrue(persistedUsers.getBooks().size() == oneTestUser.getBooks().size());
+    }
+
+    @Test(expected = NullPointerException.class)
     public void whenCreateUserWithoutUsername_thenTrowException() {
         oneTestUser.setUsername(null);
-        usersRepository.save(oneTestUser);
     }
 }
 

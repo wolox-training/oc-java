@@ -15,7 +15,6 @@ import wolox.training.models.Users;
 import wolox.training.repositories.BookRepository;
 import wolox.training.repositories.UsersRepository;
 
-import java.util.List;
 import java.util.Optional;
 
 @RestController
@@ -32,7 +31,7 @@ public class UsersController {
     }
 
     @GetMapping("/username/{userName}")
-    public List findByName(@PathVariable String username) {
+    public Optional<Users> findByUsername(@PathVariable String username) {
         return usersRepository.findByUsername(username);
     }
 
