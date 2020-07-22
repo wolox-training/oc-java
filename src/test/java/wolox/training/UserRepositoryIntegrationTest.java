@@ -40,10 +40,11 @@ public class UserRepositoryIntegrationTest {
                 "Bantam books",
                 1998
         );
-        oneTestUser = new Users();
-        oneTestUser.setUsername("ocolmenares");
-        oneTestUser.setName("Oriana");
-        oneTestUser.setBirthday(LocalDate.parse("1997-11-03"));
+        oneTestUser = new Users(
+                "ocolmenares",
+                "Oriana",
+                LocalDate.parse("1997-11-03")
+        );
         oneTestUser.addBook(oneTestBook);
 
         bookRepository.save(oneTestBook);
