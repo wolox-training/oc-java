@@ -1,6 +1,7 @@
 package wolox.training.models;
 
 import com.google.common.base.Preconditions;
+import wolox.training.services.PasswordEncoderService;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -17,6 +18,9 @@ public class Users {
 
     @Column(nullable = false, unique = true)
     private String username;
+
+    @Column(nullable = false)
+    private String password;
 
     @Column(nullable = false)
     private String name;
@@ -69,6 +73,15 @@ public class Users {
     public void setBirthday(LocalDate birthday) {
         Preconditions.checkNotNull(birthday, "Please check the Object supplied, its null!");
         this.birthday = birthday;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        Preconditions.checkNotNull(password, "Please check the Object supplied, its null!");
+        this.password = PasswordEncoderService.encode(password);
     }
 
     public List<Book> getBooks() {
