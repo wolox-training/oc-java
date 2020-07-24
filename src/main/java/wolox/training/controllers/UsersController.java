@@ -15,7 +15,6 @@ import wolox.training.models.Users;
 import wolox.training.repositories.BookRepository;
 import wolox.training.repositories.UsersRepository;
 
-import java.util.List;
 import java.util.Optional;
 
 @RestController
@@ -32,8 +31,8 @@ public class UsersController {
     }
 
     @GetMapping("/username/{userName}")
-    public List findByName(@PathVariable String username) {
-        return usersRepository.findByName(username);
+    public Optional<Users> findByUsername(@PathVariable String username) {
+        return usersRepository.findByUsername(username);
     }
 
     @GetMapping("/{id}")
@@ -75,7 +74,7 @@ public class UsersController {
     public void addBooks(@PathVariable Long id, @PathVariable Long bookId) {
         Book book = bookRepository.findById(bookId).orElseThrow(() -> new BookNotFoundException("error book no existe"));
         Users users = usersRepository.findById(id).orElseThrow(() -> new UserNotFoundException("error user"));
-        users.addBooks(book);
+        users.addBook(book);
         usersRepository.save(users);
     }
 

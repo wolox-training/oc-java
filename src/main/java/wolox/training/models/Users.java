@@ -28,12 +28,7 @@ public class Users {
     @Column(nullable = false)
     private LocalDate birthday;
 
-    @ManyToMany(targetEntity = Book.class, cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
-    @JoinTable(
-            name = "user_books",
-            joinColumns = {@JoinColumn(name = "USERS_ID")},
-            inverseJoinColumns = {@JoinColumn(name = "BOOK_ID")}
-    )
+    @ManyToMany(cascade = {CascadeType.MERGE, CascadeType.REFRESH})
     private List<Book> books = new ArrayList<>();
 
     public Users() {
@@ -44,6 +39,13 @@ public class Users {
         this.books = new ArrayList<>();
     }
 
+    public Users(String username, String name, LocalDate birthday) {
+        this.username = username;
+        this.name = name;
+        this.birthday = birthday;
+    }
+
+
     public long getId() {
         return id;
     }
@@ -53,7 +55,7 @@ public class Users {
     }
 
     public void setUsername(String username) {
-        Preconditions.checkNotNull(username, "Please check the Object supplied, its null!");
+        Preconditions.checkNotNull(username, "Please check the username supplied, its null!");
         this.username = username;
     }
 
@@ -62,7 +64,7 @@ public class Users {
     }
 
     public void setName(String name) {
-        Preconditions.checkNotNull(name, "Please check the Object supplied, its null!");
+        Preconditions.checkNotNull(name, "Please check the name supplied, its null!");
         this.name = name;
     }
 
@@ -71,7 +73,7 @@ public class Users {
     }
 
     public void setBirthday(LocalDate birthday) {
-        Preconditions.checkNotNull(birthday, "Please check the Object supplied, its null!");
+        Preconditions.checkNotNull(birthday, "Please check the birthday supplied, its null!");
         this.birthday = birthday;
     }
 
@@ -92,7 +94,7 @@ public class Users {
         this.books = books;
     }
 
-    public void addBooks(Book book) {
+    public void addBook(Book book) {
         books.add(book);
     }
 
