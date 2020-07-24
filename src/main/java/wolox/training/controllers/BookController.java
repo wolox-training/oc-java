@@ -13,7 +13,7 @@ import wolox.training.exceptions.BookNotFoundException;
 import wolox.training.models.Book;
 import wolox.training.repositories.BookRepository;
 
-import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/books")
@@ -33,10 +33,9 @@ public class BookController {
         return bookRepository.findAll();
     }
 
-    @GetMapping("/title/{bookTitle}")
-
-    public List findByTitle(@PathVariable String bookTitle) {
-        return bookRepository.findByTitle(bookTitle);
+    @GetMapping("/title/{title}")
+    public Optional<Book> findByTitle(@PathVariable String title) {
+        return bookRepository.findByTitle(title);
     }
 
     @GetMapping("/{id}")

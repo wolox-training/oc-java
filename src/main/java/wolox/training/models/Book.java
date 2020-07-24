@@ -41,7 +41,7 @@ public class Book {
     @Column(nullable = false)
     private int year;
 
-    @ManyToMany(mappedBy = "books", fetch = FetchType.EAGER)
+    @ManyToMany(mappedBy = "books")
     private List<Users> users = new ArrayList<>();
 
 
@@ -50,6 +50,17 @@ public class Book {
 
     public Book(long id) {
         this.id = id;
+    }
+
+    public Book(String isbn, String title, String author, String genre, String subtitle, String image, String publisher, int year) {
+        this.isbn = isbn;
+        this.title = title;
+        this.author = author;
+        this.genre = genre;
+        this.subtitle = subtitle;
+        this.image = image;
+        this.publisher = publisher;
+        this.year = year;
     }
 
     public long getId() {
