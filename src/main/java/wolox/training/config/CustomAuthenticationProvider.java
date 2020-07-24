@@ -8,6 +8,7 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.stereotype.Component;
 import wolox.training.models.Users;
 import wolox.training.repositories.UsersRepository;
+import wolox.training.services.PasswordEncoderService;
 
 import java.util.ArrayList;
 import java.util.Optional;
@@ -24,7 +25,9 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
         String name = authentication.getName();
         String password = authentication.getCredentials().toString();
 
-        Optional<Users> user = usersRepository.findByUserName(name);
+        Optional<Users> user = usersRepository.findByUsername(name);
+
+        boolean match = PasswordEncoderService.passwordMatch(password);
 
         if (user.isPresent() && user.get().getPassword().equals(password)) {
             return new UsernamePasswordAuthenticationToken(

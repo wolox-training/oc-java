@@ -14,4 +14,8 @@ public class PasswordEncoderService {
     public static String encode(String password) {
         return getPasswordEncoder().encode(password);
     }
+
+    public static boolean passwordMatch(String password) {
+        return getPasswordEncoder().matches(password, encode(password));
+    }
 }
