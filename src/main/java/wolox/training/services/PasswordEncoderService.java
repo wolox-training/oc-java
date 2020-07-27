@@ -12,10 +12,11 @@ public class PasswordEncoderService {
     }
 
     public static String encode(String password) {
-        return getPasswordEncoder().encode(password);
+        String encoded = getPasswordEncoder().encode(password);
+        return encoded;
     }
 
-    public static boolean passwordMatch(String password) {
-        return getPasswordEncoder().matches(password, encode(password));
+    public static boolean passwordMatch(String password, String encoded) {
+        return getPasswordEncoder().matches(password, encoded);
     }
 }

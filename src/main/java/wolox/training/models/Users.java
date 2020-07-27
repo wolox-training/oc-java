@@ -39,9 +39,10 @@ public class Users {
         this.books = new ArrayList<>();
     }
 
-    public Users(String username, String name, LocalDate birthday) {
+    public Users(String username, String name, String password, LocalDate birthday) {
         this.username = username;
         this.name = name;
+        this.password = password;
         this.birthday = birthday;
     }
 

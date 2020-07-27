@@ -27,9 +27,9 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
 
         Optional<Users> user = usersRepository.findByUsername(name);
 
-        boolean match = PasswordEncoderService.passwordMatch(password);
+        boolean matchPassword = PasswordEncoderService.passwordMatch(user.get().getPassword(), password);
 
-        if (user.isPresent() && user.get().getPassword().equals(password)) {
+        if (user.isPresent() && matchPassword) {
             return new UsernamePasswordAuthenticationToken(
                     name, password, new ArrayList<>());
         } else {
