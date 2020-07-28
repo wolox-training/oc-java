@@ -27,7 +27,7 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
 
         Optional<Users> user = usersRepository.findByUsername(name);
 
-        boolean matchPassword = PasswordEncoderService.passwordMatch(user.get().getPassword(), password);
+        boolean matchPassword = PasswordEncoderService.passwordMatch(password, user.get().getPassword());
 
         if (user.isPresent() && matchPassword) {
             return new UsernamePasswordAuthenticationToken(
@@ -39,6 +39,6 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
 
     @Override
     public boolean supports(Class<?> authentication) {
-        return false;
+        return authentication.equals(UsernamePasswordAuthenticationToken.class);
     }
 }
