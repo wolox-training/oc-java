@@ -42,7 +42,7 @@ public class Users {
     public Users(String username, String name, String password, LocalDate birthday) {
         this.username = username;
         this.name = name;
-        this.password = password;
+        setPassword(password);
         this.birthday = birthday;
     }
 
