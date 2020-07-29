@@ -43,6 +43,7 @@ public class UserRepositoryIntegrationTest {
         oneTestUser = new Users(
                 "ocolmenares",
                 "Oriana",
+                "password",
                 LocalDate.parse("1997-11-03")
         );
         oneTestUser.addBook(oneTestBook);
@@ -50,7 +51,6 @@ public class UserRepositoryIntegrationTest {
         bookRepository.save(oneTestBook);
         usersRepository.save(oneTestUser);
     }
-
 
     @Test
     public void whenGetUser_thenUserIsPersisted() {
