@@ -4,22 +4,27 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class OpenLibraryService {
-   /* @GET
-    private Response findCustomer(@PathParam("bookIsbn") String bookIsbn) {
-        Book book = BookRepository.findBookByIsbn(bookIsbn); //Entity
 
-        //Create dto
-        BookDTO dto = new BookDTO();
-        dto.setIsbn(book.getIsbn());
-        dto.setTitle(book.getTitle());
-        dto.setSubtitle(book.getSubtitle());
-        dto.setPublisher(book.getPublisher());
-        dto.setNumberOfPages(book.getNumberOfPages());
+   /* RestTemplate restTemplate = new RestTemplate();
+    String openLibraryUrl
+            = "https://openlibrary.org/api/books?bibkeys=ISBN:"; //PREGUNTAR: como le concateno lo del final de la url
+    ResponseEntity<Book> response
+            = restTemplate.getForEntity(openLibraryUrl + "/{isbn}", Book.class);
+    assertThat(response.getStatusCode(),equalTo(HttpStatus.OK));
 
-        //Return DTO
-        return Response.ok(dto, MediaType.APPLICATION_JSON).build();
-    }
+
+
+    BookDTO book = restTemplate
+            .getForObject(openLibraryUrl + "/{isbn}", BookDTO.class);
+    assertThat(book.getTitle(),notNullValue());
+
+    assertThat(book.getSubtitle(),is(1L));
 
     */
+
+
+    //ModelMapper modelMapper = new ModelMapper();
+    //BookDTO bookDTO = modelMapper.map(book, BookDTO.class);
+
 
 }

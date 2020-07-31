@@ -13,7 +13,6 @@ public class BookDTO {
     private int numberOfPages;
     private ArrayList<List> authors;
 
-
     public BookDTO() {
     }
 
